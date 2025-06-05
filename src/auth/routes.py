@@ -1,16 +1,19 @@
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
+from fastapi.responses import JSONResponse
 # import status
 from .schemas import UserCreateModel
 from .service import UserService
 from src.db.main import get_session
 from sqlmodel.ext.asyncio.session import AsyncSession
-from .schemas import UserModel
+from .schemas import UserModel,UserLoginModel
+from .utils import create_access_token,decode_token,verify_Passw
+from datetime import timedelta, datetime
 
 auth_router = APIRouter()
 user_service = UserService()
 
-
+REFRESH_TOKEN_EXPIRY=2
 @auth_router.post(
     "/signup", response_model=UserModel, status_code=status.HTTP_201_CREATED
 )
@@ -26,3 +29,40 @@ async def create_user_account(
         )
     newusr = await user_service.create_user(user_data, session)
     return newusr
+
+@auth_router.post("/login")
+async def login_user(login_data:UserLoginModel,session:AsyncSession=Depends(get_session)):
+    email=login_data.email
+    password=login_data.password
+    user=await user_service.get_user_by_email(email,session)
+    if user is not None:
+        password_valid=verify_Passw(password,user.password_hash)#type:ignore
+        if password_valid:
+            access_token=create_access_token(user_data={
+                'email':user.email,  #type:ignore
+                'user_id':str(user.uid)
+                #type:ignore
+            })
+            refresh_token=create_access_token(
+                user_data={
+                'email':user.email,  #type:ignore
+                'user_id':str(user.uid)
+                #type:ignore
+            },
+                refresh=True,
+                expiry=timedelta(days=REFRESH_TOKEN_EXPIRY)
+            )
+            return JSONResponse(
+                content={
+                    "message": "login succesfull",
+                    "access_token": access_token,
+                    "refresh_token": refresh_token,
+                    "user": {
+                        "email": user.email,
+                        "uid": str(user.uid)
+                    }
+                }
+            )
+    else:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="Invalid Email or password.")
+    

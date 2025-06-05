@@ -18,3 +18,10 @@ class UserModel(BaseModel):
     password_hash:str = Field(exclude=True)
     created_at:datetime
     update_at:datetime
+
+
+class UserLoginModel(BaseModel):
+    # uid: uuid.UUID
+    email: EmailStr = Field(max_length=40)
+    password: str= Field(min_length=6)
+    # password_hash:str = Field(exclude=True)
