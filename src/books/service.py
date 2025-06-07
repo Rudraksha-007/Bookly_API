@@ -17,9 +17,12 @@ class BookService:
 
     async def create_book(self,book_data:BookCreateModel,session:AsyncSession):
         book_data_dict=book_data.model_dump()
-        new_book=Book(**book_data_dict)
-        new_book.published_date=datetime.strptime(book_data_dict["published_date"],"%Y-%m-%d") 
-
+        published_date = book_data_dict["published_date"]
+        if isinstance(published_date,str):    
+            new_book=Book(**book_data_dict)
+            new_book.published_date=datetime.strptime(published_date,"%Y-%m-%d") 
+        else:
+            new_book=Book(**book_data_dict)
         session.add(new_book)
         await session.commit()
         return new_book
