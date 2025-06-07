@@ -18,6 +18,8 @@ class User(SQLModel,table=True):
     email:str
     fname:str
     lname:str
+    role:str=Field(sa_column=Column(pg.VARCHAR,nullable=False,server_default="user"))
+    
     is_verified:bool=Field(default=False)
     password_hash:str = Field(exclude=True)
     created_at:datetime=Field(sa_column=Column(pg.TIMESTAMP,default=datetime.now))
@@ -26,3 +28,4 @@ class User(SQLModel,table=True):
     def __repr__(self):
         return f"<User {self.username}>"
     
+# class Admin(User):

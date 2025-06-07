@@ -7,6 +7,7 @@ class UserCreateModel(BaseModel):
     password: str= Field(min_length=6)
     fname:str
     lname:str
+    role:str
     
 class UserModel(BaseModel):
     uid: uuid.UUID
@@ -14,6 +15,7 @@ class UserModel(BaseModel):
     email:str
     fname:str
     lname:str
+    role:str
     is_verified:bool
     password_hash:str = Field(exclude=True)
     created_at:datetime
