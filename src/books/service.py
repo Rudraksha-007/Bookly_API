@@ -1,7 +1,7 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
 from .schemas import BookCreateModel, BookUpdateModel
 from sqlmodel import select, desc
-from .models import Book
+from src.db.models import Book
 from datetime import datetime
 
 
@@ -22,6 +22,7 @@ class BookService:
     ):
         book_data_dict = book_data.model_dump()
         published_date = book_data_dict["published_date"]
+        
         if isinstance(published_date, str):
             new_book = Book(**book_data_dict)
             new_book.published_date = datetime.strptime(published_date, "%Y-%m-%d")

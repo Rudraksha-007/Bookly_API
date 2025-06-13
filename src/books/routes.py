@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi import FastAPI, Header, status, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from src.books.data import data
-from src.books.schemas import Book, BookUpdateModel, BookCreateModel
+from src.books.schemas import Book, BookUpdateModel, BookCreateModel,BoookDetailModel
 from typing import List
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.db.main import get_session
@@ -58,7 +58,7 @@ async def create_book(
     return new_book  # type:ignore
 
 
-@book_router.get("/{book_id}", response_model=Book)
+@book_router.get("/{book_id}", response_model=BoookDetailModel)
 
 async def get_book(
     book_id: str,
