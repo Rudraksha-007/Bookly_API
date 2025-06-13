@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 
 # import status
-from .schemas import UserCreateModel
+from .schemas import UserCreateModel, UserBooksModel
 from .service import UserService
 from src.db.main import get_session
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -17,7 +17,7 @@ from .dependencies import get_curr_user, RoleChecker
 
 auth_router = APIRouter()
 user_service = UserService()
-role_service = RoleChecker(["admin","user"])
+role_service = RoleChecker(["admin", "user"])
 
 
 REFRESH_TOKEN_EXPIRY = 2
@@ -93,7 +93,7 @@ async def renew_session(token_details: dict = Depends(RefreshTokenBearer())):
     )
 
 
-@auth_router.get("/me")
+@auth_router.get("/me", response_model=UserBooksModel)
 async def get_current_user(
     user=Depends(get_curr_user), _: bool = Depends(role_service)
 ):
@@ -104,7 +104,13 @@ async def get_current_user(
 async def revoke_token(token_details: dict = Depends(AccessTokenBearer())):
 
     JTI = token_details["jti"]
-    await add_jti_to_blocklist(JTI)
-    return JSONResponse(
-        content={"message": "Logged Out succesfully"}, status_code=status.HTTP_200_OK
-    )
+    if await add_jti_to_blocklist(JTI):
+        return JSONResponse(
+            content={"message": "Logged Out succesfully"},
+            status_code=status.HTTP_200_OK,
+        )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_417_EXPECTATION_FAILED,
+            detail="Couldn't logout safely please try again.",
+        )

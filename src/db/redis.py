@@ -9,7 +9,8 @@ token_blocklist = aioredis.StrictRedis(
 
 
 async def add_jti_to_blocklist(jti: str):
-    await token_blocklist.set(name=jti, value="", ex=JTI_EXPIRY)
+    print("Hello from the add to jti blockslist function")
+    return await token_blocklist.set(name=jti, value="", ex=JTI_EXPIRY)==True
 
 
 async def token_in_blocklist(jti:str):
@@ -17,3 +18,5 @@ async def token_in_blocklist(jti:str):
     if JTI:
         return True
     return False
+
+# print(token_blocklist)
