@@ -1,8 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
-
-# import status
 from .schemas import UserCreateModel, UserBooksModel
 from .service import UserService
 from src.db.main import get_session
@@ -13,7 +10,7 @@ from datetime import timedelta, datetime
 from .dependencies import RefreshTokenBearer, AccessTokenBearer
 from src.db.redis import add_jti_to_blocklist
 from .dependencies import get_curr_user, RoleChecker
-
+from src.errors import *
 
 auth_router = APIRouter()
 user_service = UserService()
@@ -33,10 +30,7 @@ async def create_user_account(
     email = user_data.email
     user_exists = await user_service.user_exists(email, session)
     if user_exists:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="User with this email already exists",
-        )
+        raise UserAlreadyExists()
     newusr = await user_service.create_user(user_data, session)
     return newusr
 
@@ -77,10 +71,7 @@ async def login_user(
                 }
             )
     else:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Email or password."
-        )
-
+        raise InvalidEmail_Or_Password()
 
 @auth_router.get("/refresh_token")
 async def renew_session(token_details: dict = Depends(RefreshTokenBearer())):
@@ -88,9 +79,7 @@ async def renew_session(token_details: dict = Depends(RefreshTokenBearer())):
     if datetime.fromtimestamp(expiry_timestamp) > datetime.now():
         new_accessToken = create_access_token(user_data=token_details["user"])
         return JSONResponse(content={"access_token": new_accessToken})
-    raise HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid/Expired token."
-    )
+    raise InvalidToken()
 
 
 @auth_router.get("/me", response_model=UserBooksModel)
@@ -110,7 +99,4 @@ async def revoke_token(token_details: dict = Depends(AccessTokenBearer())):
             status_code=status.HTTP_200_OK,
         )
     else:
-        raise HTTPException(
-            status_code=status.HTTP_417_EXPECTATION_FAILED,
-            detail="Couldn't logout safely please try again.",
-        )
+        raise LogoutFailed()

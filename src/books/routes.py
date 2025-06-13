@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from fastapi import FastAPI, Header, status, HTTPException, Depends
+from fastapi import status, Depends
 from fastapi.responses import JSONResponse
 from src.books.data import data
 from src.books.schemas import Book, BookUpdateModel, BookCreateModel,BoookDetailModel
@@ -7,9 +7,9 @@ from typing import List
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.db.main import get_session
 from src.books.service import BookService
-from src.auth.dependencies import AccessTokenBearer
-from src.auth.dependencies import get_curr_user, RoleChecker
+from src.auth.dependencies import (AccessTokenBearer,RoleChecker)
 # from src.db.redis import 
+from src.errors import *    
 
 book_router = APIRouter()
 book_service = BookService()
@@ -51,7 +51,6 @@ async def create_book(
 ):
     print(token_details)
     user_id = token_details.get("user")["user_id"]  # type:ignore
-    # if user_id is not None:
     new_book = await book_service.create_book(
         book_data, user_id, session
     )  # type:ignore
@@ -70,9 +69,7 @@ async def get_book(
     if book:
         return book
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Book not found"
-        )
+        raise UnableToFetchResource()
 
 
 @book_router.patch("/{book_id}")
@@ -89,9 +86,7 @@ async def update_book(
     if updatedBook:
         return updatedBook
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Book was not located."
-        )
+        raise UnableToFetchResource()
 
 
 @book_router.delete("/{book_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -104,8 +99,6 @@ async def delete_book(
 ):
     getrid = await book_service.delete_book(str(book_id), session)
     if getrid is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Book not found"
-        )
+        raise UnableToFetchResource()
     else:
         return None
