@@ -7,8 +7,7 @@ from src.db.models import Book
 from typing import AsyncGenerator
 
 engine: AsyncEngine = create_async_engine(
-    url=setting.DATABASE_URL,
-    echo=True
+    url=setting.DATABASE_URL
 )
 
 async_session = async_sessionmaker(
