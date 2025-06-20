@@ -192,13 +192,7 @@ Once running, access the interactive API docs at:
 
 ## Contributing
 
-We welcome contributions! Please open issues or submit pull requests. Ensure all code is tested and linted before submission.
-
----
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This is a learning project i used there isnt any possibility of contributions but they are still welcome
 
 ---
 
