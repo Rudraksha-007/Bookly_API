@@ -1,31 +1,33 @@
-from fastapi import APIRouter, Depends, status
-from fastapi.responses import JSONResponse
+from datetime import datetime, timedelta
+from fastapi import APIRouter, Depends, status,BackgroundTasks
 from fastapi.exceptions import HTTPException
-from .utils import generate_phash
+from fastapi.responses import JSONResponse
+from sqlmodel.ext.asyncio.session import AsyncSession
+from src.celeryTask import send_email
+from .dependencies import AccessTokenBearer, RefreshTokenBearer, get_curr_user, RoleChecker
 from .schemas import (
-    UserCreateModel,
-    UserBooksModel,
-    PasswordResetReqModel,
+    EmailModel,
     PasswordResetConfirmModel,
+    PasswordResetReqModel,
+    UserBooksModel,
+    UserCreateModel,
+    UserLoginModel,
+    UserModel,
 )
 from .service import UserService
-from src.db.main import get_session
-from sqlmodel.ext.asyncio.session import AsyncSession
-from .schemas import UserModel, UserLoginModel, EmailModel
 from .utils import (
-    create_access_token,
-    decode_token,
-    verify_Passw,
     createURL_safe_Token,
+    create_access_token,
     decode_URL_safeToken,
+    decode_token,
+    generate_phash,
+    verify_Passw,
 )
-from datetime import timedelta, datetime
-from .dependencies import RefreshTokenBearer, AccessTokenBearer
+from src.config import setting
+from src.db.main import get_session
 from src.db.redis import add_jti_to_blocklist
-from .dependencies import get_curr_user, RoleChecker
 from src.errors import *
 from src.mail import create_Message, mail
-from src.config import setting
 
 # from utils import create_access_token
 
@@ -43,17 +45,19 @@ REFRESH_TOKEN_EXPIRY = 2
 @auth_router.post("/sendMail")
 async def send_mail(mailaddr: EmailModel):
     emails = mailaddr.addresses
+
     html = "<h1>Welcome to Bookly.</h1>"
-    message = create_Message(recipents=emails, subject="Welcome Email", body=html)
-    await mail.send_message(message)  # type: ignore
+    subject="Welcome to our app!"
+
+    send_email.delay(emails,subject,html)
     return {"message": "Email sent please check your inbox."}
 
 
 @auth_router.post("/signup", response_model=Any, status_code=status.HTTP_201_CREATED)
 async def create_user_account(
     user_data: UserCreateModel,
+    bg_tasks:BackgroundTasks,
     session: AsyncSession = Depends(get_session),
-    response_model=None,
 ):
     email = user_data.email
     user_exists = await user_service.user_exists(email, session)
@@ -65,16 +69,14 @@ async def create_user_account(
 
     link = f"http://{setting.DOMAIN}/api/v1/auth/verify/{token}"
 
-    html_message = f"""
+    html = f"""
     <h1>Verify your email</h1>
     <p>Please click <a href="{link}">this</a> link to verify your email.</p>
     """
+    emails=[email]
+    subject="Verify Your email"
 
-    message = create_Message(
-        recipents=[email], subject="Verification email", body=html_message
-    )
-
-    await mail.send_message(message)  # type: ignore
+    send_email.delay(emails,subject,html) # type: ignore
 
     return {
         "Message": "Account Created! Please check your email to verify your account.",

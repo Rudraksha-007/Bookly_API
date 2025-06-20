@@ -21,6 +21,7 @@ app=FastAPI(
     title="Bookly",
     description="A REST API for book review web service.",
     version=version,
+    terms_of_service=""
 )
 register_middleware(app)
 register_Errors(app)
