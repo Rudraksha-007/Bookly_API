@@ -1,7 +1,9 @@
-from typing import Any,Callable
+from typing import Any, Callable
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse
-from fastapi import FastAPI,status
+from fastapi import FastAPI, status
+
+
 class BooklyExceptions(Exception):
     """This is the default base class for all the bookly API exceptions and errors"""
 
@@ -68,29 +70,34 @@ class InternalServerError(BooklyExceptions):
     pass
 
 
-def Create_exception_handler(status_code:int,initial_detail:Any)->Callable[[Request,Exception],JSONResponse]:#type:ignore
+class userNotverfied(BooklyExceptions):
+    """User is not verified"""
 
-    async def exception_handler(request:Request,exc:BooklyExceptions):
-
-        return JSONResponse(
-            content=initial_detail,
-            status_code=status_code
-        )
-    
-    return exception_handler # type: ignore
+    pass
 
 
-def register_Errors(app:FastAPI):
-        
+def Create_exception_handler(
+    status_code: int, initial_detail: Any
+) -> Callable[[Request, Exception], JSONResponse]:  # type:ignore
+
+    async def exception_handler(request: Request, exc: BooklyExceptions):
+
+        return JSONResponse(content=initial_detail, status_code=status_code)
+
+    return exception_handler  # type: ignore
+
+
+def register_Errors(app: FastAPI):
+
     app.add_exception_handler(
         UserAlreadyExists,
         Create_exception_handler(
             status_code=status.HTTP_403_FORBIDDEN,
             initial_detail={
-                "Message":"User with same email already exists.",
-                "Error Code": "user_exists"
-            }
-        )
+                "Message": "User with same email already exists.",
+                "Error Code": "user_exists",
+            },
+        ),
     )
 
     app.add_exception_handler(
@@ -98,10 +105,10 @@ def register_Errors(app:FastAPI):
         Create_exception_handler(
             status_code=status.HTTP_403_FORBIDDEN,
             initial_detail={
-                "Message":"User provided a expired or revoked token",
-                "Error Code": "user_token_expired"
-            }
-        )
+                "Message": "User provided a expired or revoked token",
+                "Error Code": "user_token_expired",
+            },
+        ),
     )
 
     app.add_exception_handler(
@@ -109,60 +116,50 @@ def register_Errors(app:FastAPI):
         Create_exception_handler(
             status_code=status.HTTP_401_UNAUTHORIZED,
             initial_detail={
-                "Message":"User provided a revoked token",
-                "Error Code": "user_token_revoked"
-            }
-        )
+                "Message": "User provided a revoked token",
+                "Error Code": "user_token_revoked",
+            },
+        ),
     )
 
     app.add_exception_handler(
         AccessTokenRequired,
         Create_exception_handler(
             status_code=status.HTTP_403_FORBIDDEN,
-            initial_detail={
-                "Message":"Please provie a Access token"
-            }
-        )
+            initial_detail={"Message": "Please provie a Access token"},
+        ),
     )
 
     app.add_exception_handler(
         RefreshTokenRequired,
         Create_exception_handler(
             status_code=status.HTTP_403_FORBIDDEN,
-            initial_detail={
-                "Message":"Please provie a Refresh token"
-            }
-        )
+            initial_detail={"Message": "Please provie a Refresh token"},
+        ),
     )
 
     app.add_exception_handler(
         UserAlreadyExists,
         Create_exception_handler(
             status_code=status.HTTP_403_FORBIDDEN,
-            initial_detail={
-                "Message":"user already exists"
-            }
-        )
+            initial_detail={"Message": "user already exists"},
+        ),
     )
 
     app.add_exception_handler(
         InsufficientPermission,
         Create_exception_handler(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            initial_detail={
-                "Message":"user is not authorized for this action!"
-            }
-        )
+            initial_detail={"Message": "user is not authorized for this action!"},
+        ),
     )
 
     app.add_exception_handler(
         InvalidEmail_Or_Password,
         Create_exception_handler(
             status_code=status.HTTP_400_BAD_REQUEST,
-            initial_detail={
-                "Message":"Please provide a valid email and password."
-            }
-        )
+            initial_detail={"Message": "Please provide a valid email and password."},
+        ),
     )
 
     app.add_exception_handler(
@@ -170,9 +167,9 @@ def register_Errors(app:FastAPI):
         Create_exception_handler(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             initial_detail={
-                "Message":"The system was not able log out the user sucessfully."
-            }
-        )
+                "Message": "The system was not able log out the user sucessfully."
+            },
+        ),
     )
 
     app.add_exception_handler(
@@ -180,25 +177,42 @@ def register_Errors(app:FastAPI):
         Create_exception_handler(
             status_code=status.HTTP_404_NOT_FOUND,
             initial_detail={
-                "Message":"The system could not find the required entity in the database"
-            }
-        )
+                "Message": "The system could not find the required entity in the database"
+            },
+        ),
     )
 
     app.add_exception_handler(
         InternalServerError,
         Create_exception_handler(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            initial_detail={
-                "Message":"An internal server error has occured."
-            }
-        )
+            initial_detail={"Message": "An internal server error has occured."},
+        ),
     )
 
-
     app.exception_handler(500)
-    async def ISE(request,exc):
+
+    async def ISE(request, exc):
         return JSONResponse(
-            content={"Message":"Oops! something went wrong", "ErrorCode":"500 ISR"},
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )    
+            content={"Message": "Oops! something went wrong", "ErrorCode": "500 ISR"},
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+    # app.exception_handler(500)
+    # async def ISE(request,exc):
+    #     return JSONResponse(
+    #         content={"Message":"Oops! something went wrong", "ErrorCode":"500 ISR"},
+    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+    #     )
+
+    app.add_exception_handler(
+        userNotverfied,
+        Create_exception_handler(
+            status_code=status.HTTP_403_FORBIDDEN,
+            initial_detail={
+                "Message": "User is not Verified.",
+                "Error Code": "user_not_verified",
+                "Resolution":"Please check your email to activate the bookly account"
+            },
+        ),
+    )
