@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\graphql\checks.py
+# hypothesis_version: 6.135.14
+
+[';locations:', ';path:', 'GraphQL client error', 'GraphQL server error', '_unique_key_cache', 'case_id', 'errors', 'locations', 'message', 'operation', 'path', 'severity', 'title', 'type_name']

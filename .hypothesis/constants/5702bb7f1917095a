@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\specs\openapi\checks.py
+# hypothesis_version: 6.135.14
+
+[200, 300, 400, 401, 404, 405, 500, '$ref', '*', ', ', '/', 'Cookie', 'DELETE', 'Missing ', 'OPTIONS', 'POST', 'Response', 'Schema', 'Unknown', 'allow', 'apiKey', 'authorization', 'basic', 'boolean', 'content-type', 'cookie', 'cookies', 'default', 'delete', 'explicit', 'generated', 'generated_auth', 'header', 'headers', 'http', 'in', 'integer', 'invalid_auth', 'missing_allow_header', 'name', 'no_auth', 'null', 'number', 'query', 'responses', 's', 'session', 'string', 'type', 'value', 'variables', 'wrong_status', '{', '}']

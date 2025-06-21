@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\engine\recorder.py
+# hypothesis_version: 6.135.14
+
+['_encoded_body_cache', 'body', 'body_size', 'case', 'cases', 'checks', 'code_sample', 'failure', 'failure_info', 'headers', 'interactions', 'label', 'method', 'name', 'parent_id', 'request', 'response', 'roots', 'status', 'timestamp', 'transition', 'uri', 'utf-8', 'value', 'verify']

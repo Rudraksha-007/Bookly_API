@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\cli\commands\run\loaders.py
+# hypothesis_version: 6.135.14
+
+['.gql', '.graphql', '.json', '.yaml', '.yml', '/graphql', '/graphql/', 'BaseSchema', 'ProjectConfig', 'auth', 'cert', 'ignore', 'openapi', 'swagger', 'verify', 'wait_for_schema']

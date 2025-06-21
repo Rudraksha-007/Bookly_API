@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\graphql\type\scalars.py
+# hypothesis_version: 6.135.14
+
+[-2147483648, 2147483647, 'Boolean', 'Float', 'GRAPHQL_MAX_INT', 'GRAPHQL_MIN_INT', 'GraphQLBoolean', 'GraphQLFloat', 'GraphQLID', 'GraphQLInt', 'GraphQLString', 'ID', 'Int', 'String', 'builtins', 'false', 'true']

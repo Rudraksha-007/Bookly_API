@@ -1,10 +1,24 @@
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Depends, status,BackgroundTasks
+
+from fastapi import APIRouter, Depends, status, BackgroundTasks
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
+
 from sqlmodel.ext.asyncio.session import AsyncSession
+
+from src.config import setting
 from src.celeryTask import send_email
-from .dependencies import AccessTokenBearer, RefreshTokenBearer, get_curr_user, RoleChecker
+from src.db.main import get_session
+from src.db.redis import add_jti_to_blocklist
+from src.errors import *
+from src.mail import create_Message, mail
+
+from .dependencies import (
+    AccessTokenBearer,
+    RefreshTokenBearer,
+    get_curr_user,
+    RoleChecker,
+)
 from .schemas import (
     EmailModel,
     PasswordResetConfirmModel,
@@ -23,11 +37,6 @@ from .utils import (
     generate_phash,
     verify_Passw,
 )
-from src.config import setting
-from src.db.main import get_session
-from src.db.redis import add_jti_to_blocklist
-from src.errors import *
-from src.mail import create_Message, mail
 
 # from utils import create_access_token
 
@@ -47,16 +56,16 @@ async def send_mail(mailaddr: EmailModel):
     emails = mailaddr.addresses
 
     html = "<h1>Welcome to Bookly.</h1>"
-    subject="Welcome to our app!"
+    subject = "Welcome to our app!"
 
-    send_email.delay(emails,subject,html)
+    send_email.delay(emails, subject, html)  # type: ignore
     return {"message": "Email sent please check your inbox."}
 
 
 @auth_router.post("/signup", response_model=Any, status_code=status.HTTP_201_CREATED)
 async def create_user_account(
     user_data: UserCreateModel,
-    bg_tasks:BackgroundTasks,
+    bg_tasks: BackgroundTasks,
     session: AsyncSession = Depends(get_session),
 ):
     email = user_data.email
@@ -73,10 +82,10 @@ async def create_user_account(
     <h1>Verify your email</h1>
     <p>Please click <a href="{link}">this</a> link to verify your email.</p>
     """
-    emails=[email]
-    subject="Verify Your email"
+    emails = [email]
+    subject = "Verify Your email"
 
-    send_email.delay(emails,subject,html) # type: ignore
+    send_email.delay(emails, subject, html)  # type: ignore
 
     return {
         "Message": "Account Created! Please check your email to verify your account.",
@@ -192,11 +201,12 @@ async def reset_Account_password(
     password: PasswordResetConfirmModel,
     session: AsyncSession = Depends(get_session),
 ):
-    new_password=password.new_password
-    
-    if  new_password!= password.confirm_password:
-        raise HTTPException(detail="Passwords donot match",status_code=status.HTTP_400_BAD_REQUEST)
-    
+    new_password = password.new_password
+
+    if new_password != password.confirm_password:
+        raise HTTPException(
+            detail="Passwords donot match", status_code=status.HTTP_400_BAD_REQUEST
+        )
 
     toke_data = decode_URL_safeToken(token)
 
@@ -208,9 +218,9 @@ async def reset_Account_password(
         if not user:
             raise UnableToFetchResource()
 
-        passwordHash=generate_phash(new_password)
+        passwordHash = generate_phash(new_password)
         await user_service.update_user(
-            user, {"password_hash":passwordHash },session
+            user, {"password_hash": passwordHash}, session
         )  # type: ignore
 
         return JSONResponse(

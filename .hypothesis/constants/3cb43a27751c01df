@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\generation\stateful\state_machine.py
+# hypothesis_version: 6.135.14
+
+['.TestCase', '\\W|^(?=\\d)', '_', '__', 'case', 'case_id', 'defines no rules', 'definition', 'error', 'expression', 'history', 'id', 'parameter_name', 'parameters', 'parent_id', 'request_body', 'response', 'source', 'target', 'transition', 'value']

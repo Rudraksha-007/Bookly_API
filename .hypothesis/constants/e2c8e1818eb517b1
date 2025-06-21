@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\cli\commands\run\context.py
+# hypothesis_version: 6.135.14
+
+['case_id', 'cases_with_failures', 'cases_without_checks', 'code_sample', 'extraction_failures', 'failures', 'response', 'tested_operations', 'total_cases', 'unique_failures_map']

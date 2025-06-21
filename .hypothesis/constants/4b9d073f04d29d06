@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\specs\openapi\references.py
+# hypothesis_version: 6.135.14
+
+[100, '$ref', 'additionalProperties', 'allOf', 'anyOf', 'file', 'handlers', 'http', 'https', 'items', 'maxItems', 'minItems', 'minProperties', 'object', 'oneOf', 'properties', 'required']

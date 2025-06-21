@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\cli\commands\run\handlers\cassettes.py
+# hypothesis_version: 6.135.14
+
+[1000, '\n      description: ', '\n      location: ', '\n      parameter: ', '\n    data: ', '\n  checks: []', '\n  phase:', '\n  response: null', '"', '"\\\x85\u2028\u2029\ufeff', '<unknown entrypoint>', 'Content-Type', 'Cookie', 'Location', 'Set-Cookie', '\\', 'base64', 'config', 'domain', 'expires', 'format', 'httponly', 'null', 'path', 'queue', 'recorder', 'replace', 'schemathesis', 'secure', 'seed', 'st', 'utf-8', 'utf8', 'w', 'worker', '{}', '~', 'ÿ', '\ud7ff', '\ue000', '�', '\uffff']

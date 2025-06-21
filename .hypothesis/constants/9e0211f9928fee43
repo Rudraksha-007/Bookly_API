@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\engine\context.py
+# hypothesis_version: 6.135.14
+
+['_session', 'all', 'cert', 'control', 'headers', 'outcome_cache', 'proxies', 'schema', 'session', 'start_time', 'timeout', 'verify']

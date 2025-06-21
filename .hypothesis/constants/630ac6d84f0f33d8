@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\graphql\type\directives.py
+# hypothesis_version: 6.135.14
+
+['DirectiveLocation', 'GraphQLDirective', 'GraphQLSkipDirective', 'Included when true.', 'No longer supported', 'Skipped when true.', 'assert_directive', 'deprecated', 'if', 'include', 'is_directive', 'reason', 'skip', 'specifiedBy', 'specified_directives', 'url']

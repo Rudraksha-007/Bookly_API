@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\generation\case.py
+# hypothesis_version: 6.135.14
+
+[', ', '0', 'NotSet', '_auth', '_components', '_has_explicit_auth', 'after_call', 'app', 'before_call', 'body', 'cookies', 'headers', 'id', 'media_type', 'meta', 'method', 'operation', 'path', 'path_parameters', 'query', 'verify']

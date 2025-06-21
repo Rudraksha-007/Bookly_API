@@ -1,4 +1,4 @@
-from fastapi import Request,Depends
+from fastapi import Request, Depends
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from .utils import decode_token
@@ -8,6 +8,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from .service import UserService
 from typing import Any, List
 from src.db.models import User
+
 # Custom Error handling import is importing all the classes
 from src.errors import *
 
@@ -28,7 +29,7 @@ class TokenBearer(HTTPBearer):
         token_data = decode_token(token)
         if not token_data:
             raise InvalidToken()
-        
+
         JTI = token_data["jti"]
         if not self.token_valid(token):
             raise InvalidToken()
@@ -79,7 +80,7 @@ class RoleChecker:
 
         if not current_User.is_verified:
             raise userNotverfied()
-         
+
         if current_User.role not in self.allowed_roles:
             raise InsufficientPermission()
         return True

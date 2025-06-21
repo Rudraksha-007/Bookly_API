@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\specs\openapi\stateful\links.py
+# hypothesis_version: 6.135.14
+
+['.', '_cached_extract', 'body', 'container_name', 'cookie', 'expression', 'header', 'location', 'merge_body', 'name', 'operationId', 'operationRef', 'output', 'parameters', 'path', 'query', 'requestBody', 'responses', 'source', 'status_code', 'target', 'x-schemathesis']

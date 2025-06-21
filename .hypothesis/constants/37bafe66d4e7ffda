@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\core\errors.py
+# hypothesis_version: 6.135.14
+
+[' -> ', ', ', '.', ':', 'Connection failed', 'HTTPConnectionPool', '[root]', '\\(_ssl\\.c:\\d+\\)', '__notes__', 'connection_other', 'connection_ssl', 'errors', 'http_client_error', 'http_forbidden', 'http_not_found', 'http_server_error', 'message', 'module_path', 'name', 'network_other', 'read timeout=', 'source', 'status_code', 'syntax_error', 'target', 'unclassified', 'yaml_non_string_keys']

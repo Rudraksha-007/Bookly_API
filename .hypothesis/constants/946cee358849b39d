@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schemathesis\generation\hypothesis\builder.py
+# hypothesis_version: 6.135.14
+
+[',', '_components', '_serializers', '_template', 'additionalProperties', 'application', 'as_strategy_kwargs', 'auth_storage', 'before_add_examples', 'body', 'case', 'components', 'cookie', 'cookies', 'coverage', 'delete', 'examples', 'false', 'fuzzing', 'get', 'given_args', 'given_kwargs', 'header', 'headers', 'hooks', 'invalid_regex', 'kwargs', 'media_type', 'modes', 'non_serializable', 'null', 'options', 'patch', 'path', 'path_parameters', 'post', 'project', 'properties', 'put', 'query', 'required', 'seed', 'settings', 'start', 'trace', 'true', 'value']

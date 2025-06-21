@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\backoff\__init__.py
+# hypothesis_version: 6.135.14
+
+['2.2.1', 'constant', 'expo', 'fibo', 'full_jitter', 'on_exception', 'on_predicate', 'random_jitter', 'runtime']

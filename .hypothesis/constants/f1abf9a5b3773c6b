@@ -1,0 +1,4 @@
+# file: C:\Users\rudra\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\graphql\language\printer.py
+# hypothesis_version: 6.135.14
+
+['\n)', '\n}', ' & ', ' repeatable', ' | ', '(', '(\n', ')', ', ', '...', ': ', '= ', 'enum', 'extend enum', 'extend input', 'extend interface', 'extend scalar', 'extend schema', 'extend type', 'extend union', 'false', 'implements ', 'input', 'interface', 'null', 'on ', 'print_ast', 'query', 'scalar', 'schema', 'true', 'type', 'union', '{\n']
