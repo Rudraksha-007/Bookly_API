@@ -1,32 +1,32 @@
-# Bookly: Asynchronous Book Review API
+# 📚 Bookly: Asynchronous Book Review API
 
 Bookly is a modern, production-ready RESTful API for a book review web service. It demonstrates best practices in asynchronous Python development, robust authentication, scalable database management, and cloud-native patterns. The project is designed for extensibility, maintainability, and security, leveraging industry-standard tools and libraries.
 
 ---
 
-## Table of Contents
+## 🗂️ Table of Contents
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Setup & Installation](#setup--installation)
-- [Database Migrations](#database-migrations)
-- [Running the Application](#running-the-application)
-- [API Documentation](#api-documentation)
-- [Testing & Quality](#testing--quality)
-- [Contributing](#contributing)
-- [License](#license)
+- [✨ Overview](#-overview)
+- [🏛️ Architecture](#-architecture)
+- [🛠️ Tech Stack](#-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Setup & Installation](#-setup--installation)
+- [🗄️ Database Migrations](#-database-migrations)
+- [🚀 Running the Application](#-running-the-application)
+- [📖 API Documentation](#-api-documentation)
+- [🧪 Testing & Quality](#-testing--quality)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
 
 ---
 
-## Overview
+## ✨ Overview
 
 Bookly provides endpoints for user authentication, book management, and review submission. It is built with FastAPI for high performance and asynchronous I/O, SQLModel for ORM, and Alembic for migrations. JWT-based authentication and Redis-backed token revocation ensure secure session management. The project is suitable for cloud deployment and scalable microservice architectures.
 
 ---
 
-## Architecture
+## 🏛️ Architecture
 
 - **API Layer:** FastAPI serves as the entry point, providing async endpoints and automatic OpenAPI documentation.
 - **Authentication:** JWT tokens are issued and validated for secure, stateless authentication. Redis is used for token blocklisting (revocation).
@@ -37,7 +37,7 @@ Bookly provides endpoints for user authentication, book management, and review s
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 | Layer                | Technology/Library         | Purpose                                      |
 |----------------------|---------------------------|----------------------------------------------|
@@ -57,7 +57,7 @@ Bookly provides endpoints for user authentication, book management, and review s
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
@@ -104,25 +104,25 @@ src/
 
 ---
 
-## Setup & Installation
+## ⚙️ Setup & Installation
 
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/your-org/bookly.git
    cd bookly
    ```
-
 2. **Create a virtual environment and install dependencies:**
    ```sh
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   # On Windows:
+   .\venv\Scripts\activate
+   # On Linux/Mac:
+   source venv/bin/activate
    pip install -r requirement.txt
    ```
-
 3. **Configure environment variables:**
-
    Create a `.env` file in the project root:
-   ```
+   ```env
    DATABASE_URL=postgresql+asyncpg://user:password@localhost/dbname
    JWT_SECRET=your_jwt_secret
    JWT_ALGORITHM=HS256
@@ -135,16 +135,19 @@ src/
    MAIL_FROM_NAME=Bookly
    DOMAIN=localhost:8000
    ```
+4. **Start Redis with Docker:**
+   ```sh
+   docker run -d --name redis-server -p 6379:6379 redis
+   ```
 
 ---
 
-## Database Migrations
+## 🗄️ Database Migrations
 
 1. **Initialize the database (first run):**
    ```sh
    alembic upgrade head
    ```
-
 2. **Create a new migration after model changes:**
    ```sh
    alembic revision --autogenerate -m "Describe your change"
@@ -153,13 +156,12 @@ src/
 
 ---
 
-## Running the Application
+## 🚀 Running the Application
 
 1. **Start the FastAPI server:**
    ```sh
-   uvicorn src.__init__:app --reload
+   uvicorn src:app --reload
    ```
-
 2. **Start the Celery worker (for background tasks):**
    ```sh
    celery -A src.celeryTask.c_app worker --loglevel=info
@@ -167,18 +169,17 @@ src/
 
 ---
 
-## API Documentation
+## 📖 API Documentation
 
 Once running, access the interactive API docs at:
-
 - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
 - ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ---
 
-## Testing & Quality
+## 🧪 Testing & Quality
 
-- **Unit tests:** (Recommended) Place tests in a `tests/` directory and run with:
+- **Unit tests:**
   ```sh
   pytest
   ```
@@ -190,21 +191,26 @@ Once running, access the interactive API docs at:
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-This is a learning project i used there isnt any possibility of contributions but they are still welcome
-
----
-
-## Acknowledgements
-
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [SQLModel](https://sqlmodel.tiangolo.com/)
-- [Alembic](https://alembic.sqlalchemy.org/)
-- [Celery](https://docs.celeryq.dev/)
-- [Redis](https://redis.io/)
-- [FastAPI-Mail](https://sabuhish.github.io/fastapi-mail/)
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 
-For questions or support, please contact the maintainers or open an issue
+## 📝 License
+
+MIT License
+
+---
+
+## ✨ Credits
+- Built with [FastAPI](https://fastapi.tiangolo.com/)
+- Database: SQLAlchemy/SQLModel
+- Migrations: Alembic
+- Testing: Pytest, Faker
+- Task Queue: Celery
+- Caching: Redis
+
+---
+
+For questions or support, please contact the maintainers or open an issue.
