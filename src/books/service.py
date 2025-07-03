@@ -6,8 +6,8 @@ from datetime import datetime
 
 
 class BookService:
-    async def get_all_books(self, session: AsyncSession):
-        statement = select(Book).order_by(desc(Book.created_at))
+    async def get_all_books(self, session: AsyncSession,limit: int = 10, offset: int = 0):
+        statement = select(Book).order_by(desc(Book.created_at)).offset(offset).limit(limit)
         result = await session.exec(statement)
         return result.all()
 

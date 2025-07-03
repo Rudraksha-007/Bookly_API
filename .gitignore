@@ -2,3 +2,4 @@
 detect_nulls.py
 __pycache__
 .idea
+.hypothesis

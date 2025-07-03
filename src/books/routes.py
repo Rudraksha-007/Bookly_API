@@ -19,6 +19,8 @@ role_service = RoleChecker(["admin", "user"])
 
 @book_router.get("/", response_model=List[Book])
 async def get_all_books(
+    limit: int = 10,
+    offset: int = 0,
     session: AsyncSession = Depends(get_session),
     token_details: dict = Depends(access_token_bearer),
     _: bool = Depends(role_service),
