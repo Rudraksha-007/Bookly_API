@@ -193,6 +193,7 @@ Once running, access the interactive API docs at:
 
 ## 🤝 Contributing
 
+This repo. was inspired by jod35's fast api beyond crud series special thanks to Jonathan!!
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 ---
